@@ -45,9 +45,13 @@ Question3.Dump();
 //From the shifts scheduled for NAIT's placement contract, show the number
 //of employees needed for each day (ordered by day-of-week). Bonus: display
 //the name of the day of week (first day being Monday). 
-var Question4 = 
-from x in Shifts
-select new { Days = x.DayOfWeek , EmployeeNeeded = 
-(
-	
-)
+
+var days = 
+((from x in Shifts
+select new  { Days = x.DayOfWeek}).Distinct());
+
+var Question4 =
+from y in Schedules
+where y.Shift.DayOfWeek == days
+select new {number = y.Shift.Sum(NumberOfEmployees)};
+Question4.Dump();
